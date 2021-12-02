@@ -194,6 +194,9 @@ var MUIRichTextEditor = function (props, ref) {
         save: function () {
             handleSave();
         },
+        insertText: function (text) {
+            handleInsertText(text);
+        },
         insertAtomicBlock: function (name, data) {
             handleInsertAtomicBlockSync(name, data);
         },
@@ -441,6 +444,13 @@ var MUIRichTextEditor = function (props, ref) {
         if (props.onSave) {
             props.onSave(JSON.stringify((0, draft_js_1.convertToRaw)(editorState.getCurrentContent())));
         }
+    };
+    var handleInsertText = function (text) {
+        var currentContent = editorStateRef.current.getCurrentContent();
+        var currentSelection = editorStateRef.current.getSelection();
+        var newContent = draft_js_1.Modifier.replaceText(currentContent, currentSelection, text);
+        var newEditorState = draft_js_1.EditorState.push(editorState, newContent, 'insert-characters');
+        handleChange(draft_js_1.EditorState.forceSelection(newEditorState, newContent.getSelectionAfter()));
     };
     var handleInsertAtomicBlockSync = function (name, data) {
         var block = (0, utils_1.atomicBlockExists)(name, props.customControls);

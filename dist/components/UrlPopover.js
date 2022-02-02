@@ -38,7 +38,7 @@ var Button_1 = __importDefault(require("@mui/material/Button"));
 var Grid_1 = __importDefault(require("@mui/material/Grid"));
 var Popover_1 = __importDefault(require("@mui/material/Popover"));
 var TextField_1 = __importDefault(require("@mui/material/TextField"));
-var styles_1 = require("@mui/styles");
+var styles_1 = require("@mui/material/styles");
 var ButtonGroup_1 = __importDefault(require("@mui/material/ButtonGroup"));
 var InsertPhoto_1 = __importDefault(require("@mui/icons-material/InsertPhoto"));
 var Movie_1 = __importDefault(require("@mui/icons-material/Movie"));
@@ -47,18 +47,28 @@ var DeleteOutline_1 = __importDefault(require("@mui/icons-material/DeleteOutline
 var FormatAlignCenter_1 = __importDefault(require("@mui/icons-material/FormatAlignCenter"));
 var FormatAlignLeft_1 = __importDefault(require("@mui/icons-material/FormatAlignLeft"));
 var FormatAlignRight_1 = __importDefault(require("@mui/icons-material/FormatAlignRight"));
-var styles = function (_a) {
-    var spacing = _a.spacing;
-    return (0, styles_1.createStyles)({
-        linkPopover: {
-            padding: spacing(2, 2, 2, 2),
+var PREFIX = 'MUIRichTextEditorUrlPopover';
+var classes = {
+    linkPopover: PREFIX + "-linkPopover",
+    linkTextField: PREFIX + "-linkTextField"
+};
+var Root = (0, styles_1.styled)(Popover_1.default, {
+    name: PREFIX,
+    slot: 'Root',
+    overridesResolver: function (_, styles) { return styles.root; }
+})(function (_a) {
+    var _b;
+    var theme = _a.theme;
+    return (_b = {},
+        _b["& ." + classes.linkPopover] = {
+            padding: theme.spacing(2, 2, 2, 2),
             maxWidth: 250
         },
-        linkTextField: {
+        _b["& ." + classes.linkTextField] = {
             width: "100%"
-        }
-    });
-};
+        },
+        _b);
+});
 var UrlPopover = function (props) {
     var _a = (0, react_1.useState)(props.data || {
         url: undefined,
@@ -67,7 +77,6 @@ var UrlPopover = function (props) {
         alignment: undefined,
         type: undefined
     }), data = _a[0], setData = _a[1];
-    var classes = props.classes;
     var onSizeChange = function (value, prop) {
         var _a, _b;
         if (value === "") {
@@ -80,7 +89,7 @@ var UrlPopover = function (props) {
         }
         setData(__assign(__assign({}, data), (_b = {}, _b[prop] = intValue, _b)));
     };
-    return (react_1.default.createElement(Popover_1.default, { open: props.anchor !== undefined, anchorEl: props.anchor, anchorOrigin: {
+    return (react_1.default.createElement(Root, { open: props.anchor !== undefined, anchorEl: props.anchor, anchorOrigin: {
             vertical: "bottom",
             horizontal: "left"
         }, transformOrigin: {
@@ -127,5 +136,5 @@ var UrlPopover = function (props) {
                     react_1.default.createElement(Button_1.default, { onClick: function () { return props.onConfirm(props.isMedia, data.url, data.width, data.height, data.alignment, data.type); } },
                         react_1.default.createElement(Check_1.default, null)))))));
 };
-exports.default = (0, styles_1.withStyles)(styles, { withTheme: true })(UrlPopover);
+exports.default = UrlPopover;
 //# sourceMappingURL=UrlPopover.js.map

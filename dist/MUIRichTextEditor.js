@@ -36,7 +36,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(require("react"));
 var immutable_1 = __importDefault(require("immutable"));
 var classnames_1 = __importDefault(require("classnames"));
-var styles_1 = require("@mui/styles");
+var styles_1 = require("@mui/material/styles");
 var material_1 = require("@mui/material");
 var draft_js_1 = require("draft-js");
 var Toolbar_1 = __importDefault(require("./components/Toolbar"));
@@ -47,11 +47,33 @@ var CodeBlock_1 = __importDefault(require("./components/CodeBlock"));
 var UrlPopover_1 = __importDefault(require("./components/UrlPopover"));
 var Autocomplete_1 = __importDefault(require("./components/Autocomplete"));
 var utils_1 = require("./utils");
-var styles = function (theme) {
-    var _a, _b, _c, _d, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4;
-    return (0, styles_1.createStyles)({
-        root: ((_b = (_a = theme === null || theme === void 0 ? void 0 : theme.overrides) === null || _a === void 0 ? void 0 : _a.MUIRichTextEditor) === null || _b === void 0 ? void 0 : _b.root) || {},
-        container: ((_d = (_c = theme === null || theme === void 0 ? void 0 : theme.overrides) === null || _c === void 0 ? void 0 : _c.MUIRichTextEditor) === null || _d === void 0 ? void 0 : _d.container) || {
+var PREFIX = 'MUIRichTextEditor';
+var classes = {
+    root: PREFIX + "-root",
+    container: PREFIX + "-container",
+    inheritFontSize: PREFIX + "-inheritFontSize",
+    editor: PREFIX + "-editor",
+    editorContainer: PREFIX + "-editorContainer",
+    editorReadOnly: PREFIX + "-editorReadOnly",
+    error: PREFIX + "-error",
+    hidePlaceholder: PREFIX + "-hidePlaceholder",
+    placeHolder: PREFIX + "-placeHolder",
+    linkPopover: PREFIX + "-linkPopover",
+    linkTextField: PREFIX + "-linkTextField",
+    anchorLink: PREFIX + "-anchorLink",
+    toolbar: PREFIX + "-toolbar",
+    inlineToolbar: PREFIX + "-inlineToolbar"
+};
+var Root = (0, styles_1.styled)('div', {
+    name: PREFIX,
+    slot: 'Root',
+    overridesResolver: function (_, styles) { return styles.root; }
+})(function (_a) {
+    var _b;
+    var theme = _a.theme;
+    return (_b = {},
+        _b["&." + classes.root] = {},
+        _b["& ." + classes.container] = {
             margin: theme.spacing(1, 0, 0, 0),
             position: "relative",
             fontFamily: theme.typography.body1.fontFamily,
@@ -60,46 +82,46 @@ var styles = function (theme) {
                 margin: 0
             }
         },
-        inheritFontSize: ((_g = (_f = theme === null || theme === void 0 ? void 0 : theme.overrides) === null || _f === void 0 ? void 0 : _f.MUIRichTextEditor) === null || _g === void 0 ? void 0 : _g.inheritFontSize) || {
+        _b["& ." + classes.inheritFontSize] = {
             fontSize: "inherit"
         },
-        editor: ((_j = (_h = theme === null || theme === void 0 ? void 0 : theme.overrides) === null || _h === void 0 ? void 0 : _h.MUIRichTextEditor) === null || _j === void 0 ? void 0 : _j.editor) || {},
-        editorContainer: ((_l = (_k = theme === null || theme === void 0 ? void 0 : theme.overrides) === null || _k === void 0 ? void 0 : _k.MUIRichTextEditor) === null || _l === void 0 ? void 0 : _l.editorContainer) || {
+        _b["& ." + classes.editor] = {},
+        _b["& ." + classes.editorContainer] = {
             margin: theme.spacing(1, 0, 0, 0),
             cursor: "text",
             width: "100%",
             padding: theme.spacing(0, 0, 1, 0)
         },
-        editorReadOnly: ((_o = (_m = theme === null || theme === void 0 ? void 0 : theme.overrides) === null || _m === void 0 ? void 0 : _m.MUIRichTextEditor) === null || _o === void 0 ? void 0 : _o.editorReadOnly) || {
+        _b["& ." + classes.editorReadOnly] = {
             borderBottom: "none"
         },
-        error: ((_q = (_p = theme === null || theme === void 0 ? void 0 : theme.overrides) === null || _p === void 0 ? void 0 : _p.MUIRichTextEditor) === null || _q === void 0 ? void 0 : _q.error) || {
+        _b["& ." + classes.error] = {
             borderBottom: "2px solid red"
         },
-        hidePlaceholder: ((_s = (_r = theme === null || theme === void 0 ? void 0 : theme.overrides) === null || _r === void 0 ? void 0 : _r.MUIRichTextEditor) === null || _s === void 0 ? void 0 : _s.hidePlaceholder) || {
+        _b["& ." + classes.hidePlaceholder] = {
             display: "none"
         },
-        placeHolder: ((_u = (_t = theme === null || theme === void 0 ? void 0 : theme.overrides) === null || _t === void 0 ? void 0 : _t.MUIRichTextEditor) === null || _u === void 0 ? void 0 : _u.placeHolder) || {
+        _b["& ." + classes.placeHolder] = {
             color: theme.palette.grey[600],
             position: "absolute",
             outline: "none"
         },
-        linkPopover: ((_w = (_v = theme === null || theme === void 0 ? void 0 : theme.overrides) === null || _v === void 0 ? void 0 : _v.MUIRichTextEditor) === null || _w === void 0 ? void 0 : _w.linkPopover) || {
+        _b["& ." + classes.linkPopover] = {
             padding: theme.spacing(2, 2, 2, 2)
         },
-        linkTextField: ((_y = (_x = theme === null || theme === void 0 ? void 0 : theme.overrides) === null || _x === void 0 ? void 0 : _x.MUIRichTextEditor) === null || _y === void 0 ? void 0 : _y.linkTextField) || {
+        _b["& ." + classes.linkTextField] = {
             width: "100%"
         },
-        anchorLink: ((_0 = (_z = theme === null || theme === void 0 ? void 0 : theme.overrides) === null || _z === void 0 ? void 0 : _z.MUIRichTextEditor) === null || _0 === void 0 ? void 0 : _0.anchorLink) || {},
-        toolbar: ((_2 = (_1 = theme === null || theme === void 0 ? void 0 : theme.overrides) === null || _1 === void 0 ? void 0 : _1.MUIRichTextEditor) === null || _2 === void 0 ? void 0 : _2.toolbar) || {},
-        inlineToolbar: ((_4 = (_3 = theme === null || theme === void 0 ? void 0 : theme.overrides) === null || _3 === void 0 ? void 0 : _3.MUIRichTextEditor) === null || _4 === void 0 ? void 0 : _4.inlineToolbar) || {
+        _b["& ." + classes.anchorLink] = {},
+        _b["& ." + classes.toolbar] = {},
+        _b["& ." + classes.inlineToolbar] = {
             maxWidth: "180px",
             position: "absolute",
             padding: "5px",
             zIndex: 10
-        }
-    });
-};
+        },
+        _b);
+});
 var blockRenderMap = immutable_1.default.Map({
     'blockquote': {
         element: "blockquote",
@@ -160,7 +182,7 @@ var useEditorState = function (props) {
 };
 var MUIRichTextEditor = function (props, ref) {
     var _a, _b, _c;
-    var classes = props.classes, controls = props.controls, customControls = props.customControls;
+    var controls = props.controls, customControls = props.customControls;
     var _d = (0, react_1.useState)({}), state = _d[0], setState = _d[1];
     var _f = (0, react_1.useState)(false), focus = _f[0], setFocus = _f[1];
     var _g = (0, react_1.useState)(""), searchTerm = _g[0], setSearchTerm = _g[1];
@@ -891,7 +913,7 @@ var MUIRichTextEditor = function (props, ref) {
             className = classes.hidePlaceholder;
         }
     }
-    return (react_1.default.createElement("div", { id: editorId + "-root", className: classes.root },
+    return (react_1.default.createElement(Root, { id: editorId + "-root", className: classes.root },
         react_1.default.createElement("div", { id: editorId + "-container", className: (0, classnames_1.default)(classes.container, (_b = {},
                 _b[classes.inheritFontSize] = props.inheritFontSize,
                 _b)) },
@@ -919,5 +941,5 @@ var MUIRichTextEditor = function (props, ref) {
                 react_1.default.createElement(UrlPopover_1.default, { data: state.urlData, anchor: state.anchorUrlPopover, onConfirm: handleConfirmPrompt, isMedia: state.urlIsMedia })
                 : null)));
 };
-exports.default = (0, styles_1.withStyles)(styles, { withTheme: true, name: "MUIRichTextEditor" })((0, react_1.forwardRef)(MUIRichTextEditor));
+exports.default = (0, react_1.forwardRef)(MUIRichTextEditor);
 //# sourceMappingURL=MUIRichTextEditor.js.map

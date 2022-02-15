@@ -103,7 +103,6 @@ var Root = (0, styles_1.styled)('div', {
         },
         _b["& ." + classes.placeHolder] = {
             color: theme.palette.grey[600],
-            position: "absolute",
             outline: "none"
         },
         _b["& ." + classes.linkPopover] = {
